@@ -1,0 +1,25 @@
+# Build/dist do PyInstaller — gerados, pesados, recriáveis
+build/
+dist/
+
+# Cache do Claude Code (sessão local)
+.claude/
+
+# Configuração de runtime local (preferências pessoais)
+jarvis.config.json
+jarvis.modes.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE
+.vscode/
+.idea/
+
+# SO
+Thumbs.db
+desktop.ini
+.DS_Store

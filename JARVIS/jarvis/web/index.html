@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JARVIS — Control Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="app" id="app">
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-mark">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="url(#grad)" stroke-width="1.5" fill="none"/>
+            <polygon points="14,7 21,11 21,17 14,21 7,17 7,11" fill="url(#grad)" opacity="0.25"/>
+            <circle cx="14" cy="14" r="3" fill="url(#grad)"/>
+            <defs>
+              <linearGradient id="grad" x1="2" y1="2" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">JARVIS</span>
+          <span class="logo-version">v3.0 — Workstation OS</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="clock" id="clock">--:--</div>
+        <div class="voice-chip" id="voice-chip" data-state="idle" title="Estado da voz">
+          <span class="voice-chip-dot"></span>
+          <span class="voice-chip-label" id="voice-chip-label">ouvindo</span>
+        </div>
+        <div class="status-pill" id="status-pill">
+          <span class="status-dot"></span>
+          <span class="status-label" id="status-label">Aguardando</span>
+        </div>
+        <button class="icon-btn feedback-btn" id="btn-feedback" title="Mandar feedback ao desenvolvedor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </button>
+        <button class="icon-btn close-btn" id="btn-close" title="Fechar Painel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ══ TABS ══ -->
+    <nav class="tabs-nav">
+      <button class="tab-btn active" data-tab="dashboard" id="tab-dashboard">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+        Painel
+      </button>
+      <button class="tab-btn" data-tab="modes" id="tab-modes">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
+        Modos
+      </button>
+      <button class="tab-btn" data-tab="settings" id="tab-settings">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+        Configurações
+      </button>
+      <button class="tab-btn" data-tab="stats" id="tab-stats">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+        Stats
+      </button>
+      <button class="tab-btn" data-tab="logs" id="tab-logs">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+        Logs
+      </button>
+    </nav>
+
+    <!-- ══ TAB: DASHBOARD ══ -->
+    <div class="tab-panel active" id="panel-dashboard">
+
+      <!-- Activate Button -->
+      <section class="activate-section">
+        <div class="activate-ring">
+          <div class="activate-ring-inner"></div>
+          <button class="activate-btn" id="btn-activate">
+            <div class="activate-icon">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4 L20 20 M12 7.5 C6.5 10.5 3 16.2 3 22.5 C3 31.5 10.7 39 20 39 C29.3 39 37 31.5 37 22.5 C37 16.2 33.5 10.5 28 7.5" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="activate-text">ATIVAR</span>
+            <span class="activate-sub" id="activate-mode-label">Modo Padrão</span>
+          </button>
+        </div>
+        <p class="activate-hint">ou pressione <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd></p>
+        
+        <!-- Voice AI Button -->
+        <div class="voice-section">
+          <div class="voice-mic-wrap">
+            <div class="voice-aura" id="voice-aura"></div>
+            <div class="voice-aura voice-aura-2" id="voice-aura-2"></div>
+            <button class="voice-btn" id="btn-voice" title="Falar com JARVIS">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="22"/>
+                <line x1="8" y1="22" x2="16" y2="22"/>
+              </svg>
+              <span id="voice-btn-label">Falar</span>
+            </button>
+          </div>
+          <div class="voice-transcript" id="voice-transcript" style="display:none">
+            <div class="voice-status" id="voice-status-text">Processando...</div>
+            <div class="voice-text" id="voice-text"></div>
+            <div class="voice-mode" id="voice-mode-text"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modes Grid -->
+      <section class="modes-section">
+        <div class="section-header">
+          <h2 class="section-title">Modos Disponíveis</h2>
+          <span class="section-badge" id="modes-count">0 modos</span>
+        </div>
+        <div class="modes-grid" id="modes-grid">
+          <div class="mode-card skeleton"></div>
+          <div class="mode-card skeleton"></div>
+          <div class="mode-card skeleton"></div>
+          <div class="mode-card skeleton"></div>
+        </div>
+      </section>
+
+      <!-- Activity Log -->
+      <section class="log-section">
+        <div class="section-header">
+          <h2 class="section-title">Atividade Recente</h2>
+          <div class="log-live-badge"><span class="status-dot"></span>LIVE</div>
+        </div>
+        <div class="log-panel" id="log-panel">
+          <div class="log-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <p>Aguardando ativação...</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ══ TAB: MODES EDITOR ══ -->
+    <div class="tab-panel" id="panel-modes">
+      <section class="editor-section">
+        <div class="section-header">
+          <h2 class="section-title">Gerenciar Modos</h2>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-ghost" id="btn-import-modes" title="Importar modos de um arquivo JSON">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753 1.977A4.5 4.5 0 1113.5 17H5.5a3.5 3.5 0 010-7z"/><path fill-rule="evenodd" d="M9 8.5a.5.5 0 011 0v4.293l1.146-1.147a.5.5 0 11.708.708l-2 2a.5.5 0 01-.708 0l-2-2a.5.5 0 11.708-.708L9 12.793V8.5z" clip-rule="evenodd"/></svg>
+              Importar
+            </button>
+            <button class="btn-ghost" id="btn-export-modes" title="Salvar todos os modos num arquivo JSON">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/><path d="M10 13a1 1 0 01-1-1V4a1 1 0 112 0v8a1 1 0 01-1 1z"/><path d="M6.293 8.293a1 1 0 011.414 0L10 10.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"/></svg>
+              Exportar
+            </button>
+            <button class="btn-primary" id="btn-new-mode">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+              Novo Modo
+            </button>
+          </div>
+        </div>
+        <div id="modes-list" class="modes-list">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ══ TAB: SETTINGS ══ -->
+        <!-- settings-tab-panel -->
+    <div class="tab-panel" id="panel-settings">
+      <section class="editor-section">
+        <div class="settings-form">
+
+          <!-- BLOCO: Modo Padrao -->
+          <div class="settings-block">
+            <div class="settings-block-header">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+              <span>Modo Padrao</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Qual modo ativar ao pressionar o botao principal?</label>
+              <select class="form-select" id="config-default-mode">
+                <option value="modo_padrao">Carregando...</option>
+              </select>
+              <p class="form-hint">Esse e o modo que vai rodar quando voce apertar o botao grande ou o atalho de teclado.</p>
+            </div>
+          </div>
+
+          <!-- BLOCO: Voz IA - Onboarding em 3 passos -->
+          <div class="settings-block">
+            <div class="settings-block-header">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clip-rule="evenodd"/></svg>
+              <span>Conectar Voz IA &mdash; 100% gratis</span>
+              <span class="voice-status-badge" id="voice-key-status">não configurado</span>
+            </div>
+
+            <div class="onboarding-steps">
+              <div class="onboarding-step">
+                <div class="onboarding-step-number">1</div>
+                <div class="onboarding-step-body">
+                  <div class="onboarding-step-title">Abra a página da Groq</div>
+                  <div class="onboarding-step-desc">Vamos pegar sua API Key — é grátis, sem cartão.</div>
+                  <button class="btn-primary" id="btn-open-groq" type="button" style="margin-top:8px;">
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/></svg>
+                    Abrir Groq Console
+                  </button>
+                </div>
+              </div>
+
+              <div class="onboarding-step">
+                <div class="onboarding-step-number">2</div>
+                <div class="onboarding-step-body">
+                  <div class="onboarding-step-title">Crie ou faça login na conta</div>
+                  <div class="onboarding-step-desc">Lá, clique em <b>Create API Key</b>, dê um nome e copie a key (começa com <code>gsk_</code>).</div>
+                </div>
+              </div>
+
+              <div class="onboarding-step">
+                <div class="onboarding-step-number">3</div>
+                <div class="onboarding-step-body">
+                  <div class="onboarding-step-title">Cole a key aqui</div>
+                  <div style="display:flex; gap:8px; margin-top:6px;">
+                    <input type="password" class="form-input" id="config-voice-api-key" placeholder="gsk_..." autocomplete="off" style="flex:1;" />
+                    <button class="btn-ghost" id="btn-toggle-key" type="button" title="Mostrar/ocultar chave" style="min-width:36px; padding: 0 10px;">
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BLOCO: Voz do JARVIS (TTS + Wake Word) -->
+          <div class="settings-block">
+            <div class="settings-block-header">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z"/></svg>
+              <span>Voz do JARVIS</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="config-tts-voice">Voz que o JARVIS usa pra falar</label>
+              <div style="display:flex; gap:8px;">
+                <select class="form-select" id="config-tts-voice" style="flex:1;">
+                  <option value="">Carregando vozes...</option>
+                </select>
+                <button class="btn-ghost" id="btn-preview-voice" type="button" title="Testar voz" style="min-width:90px; padding: 0 12px;">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+                  Testar
+                </button>
+              </div>
+              <p class="form-hint">Vozes <b>Neural</b> são quase humanas (precisam de internet). Se cair a rede, JARVIS usa a voz padrão do Windows automaticamente.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="config-wake-threshold">Sensibilidade da palavra "hey jarvis"</label>
+              <div style="display:flex; gap:12px; align-items:center;">
+                <input type="range" id="config-wake-threshold" min="0.20" max="0.70" step="0.05" value="0.35" style="flex:1;" />
+                <span id="config-wake-threshold-label" style="min-width:90px; font-variant-numeric: tabular-nums; color: var(--text-muted); font-size: 13px;">0.35 — permissivo</span>
+              </div>
+              <p class="form-hint">
+                Pronuncie <b>"rêi djárvis"</b> (como em inglês). Mais permissivo = pega sotaque, mas pode disparar sozinho com TV/conversa. Mais estrito = exige pronúncia precisa.
+              </p>
+            </div>
+          </div>
+
+          <!-- BLOCO: Atalhos -->
+          <div class="settings-block">
+            <div class="settings-block-header">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2l-4 3-4-3H5a2 2 0 01-2-2V5zm4 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
+              <span>Atalhos de Teclado</span>
+            </div>
+            <div class="hotkey-display-row">
+              <div class="hotkey-item">
+                <span class="hotkey-label">Ativar Modo</span>
+                <div class="hotkey-combo" id="display-hotkey-activate">Ctrl + Alt + J</div>
+              </div>
+              <div class="hotkey-item">
+                <span class="hotkey-label">Encerrar JARVIS</span>
+                <div class="hotkey-combo" id="display-hotkey-stop">Ctrl + Alt + Shift + J</div>
+              </div>
+              <div class="hotkey-item">
+                <span class="hotkey-label">Falar com JARVIS</span>
+                <div class="hotkey-combo" id="display-hotkey-voice">Ctrl + Alt + V</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BLOCO: Sistema -->
+          <div class="settings-block">
+            <div class="settings-block-header">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .2.08.39.22.53l3 3a.75.75 0 101.06-1.06l-2.78-2.78V5z" clip-rule="evenodd"/></svg>
+              <span>Sistema</span>
+            </div>
+            <div class="form-group" style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <div>
+                <label class="form-label" style="margin:0;">Iniciar com o Windows</label>
+                <p class="form-hint" style="margin-top:2px;">JARVIS abre automaticamente quando você liga o PC.</p>
+              </div>
+              <label class="form-toggle" style="flex-shrink:0;">
+                <input type="checkbox" id="config-autostart" />
+                <span id="config-autostart-label">Off</span>
+              </label>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="btn-save-settings" style="width: 100%; justify-content: center; margin-top: 8px;">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293z"/></svg>
+            Salvar Configuracoes
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ══ TAB: STATS ══ -->
+    <div class="tab-panel" id="panel-stats">
+      <section class="editor-section">
+        <div class="section-header">
+          <h2 class="section-title">Estatísticas de uso</h2>
+          <div style="display:flex; gap:6px;">
+            <label class="form-toggle" title="Ligar/desligar gravação de novas execuções">
+              <input type="checkbox" id="config-history-enabled" />
+              <span>Coletar</span>
+            </label>
+            <button class="btn-ghost" id="btn-clear-history" title="Apagar tudo">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9z" clip-rule="evenodd"/></svg>
+              Apagar
+            </button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-card-value" id="stats-total">0</div>
+            <div class="stats-card-label">ativações totais</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-card-value" id="stats-top-mode">—</div>
+            <div class="stats-card-label">modo mais usado</div>
+          </div>
+        </div>
+
+        <div class="settings-block">
+          <div class="settings-block-header">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path d="M2 10a8 8 0 1116 0 8 8 0 01-16 0z"/></svg>
+            <span>Por hora do dia</span>
+          </div>
+          <div class="hour-bars" id="hour-bars"></div>
+        </div>
+
+        <div class="settings-block">
+          <div class="settings-block-header">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .2.08.39.22.53l3 3a.75.75 0 101.06-1.06l-2.78-2.78V5z" clip-rule="evenodd"/></svg>
+            <span>Atividade recente</span>
+          </div>
+          <div id="stats-recent" class="stats-recent">
+            <div class="actions-empty">Sem ativações ainda.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+<div class="tab-panel" id="panel-logs">
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">Log de Execução</span>
+          <button class="btn-ghost" id="btn-clear-logs" style="padding: 4px 10px; font-size: 11px;">Limpar</button>
+        </div>
+        <div class="log-console" id="log-console">
+          <div class="log-empty">Nenhuma ação executada ainda.</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ══ STATUS BAR ══ Sempre visível, mostra a última mensagem do log -->
+    <div class="status-bar" id="status-bar">
+      <span class="status-bar-icon" id="status-bar-icon">●</span>
+      <span class="status-bar-text" id="status-bar-text">Aguardando...</span>
+      <span class="status-bar-time" id="status-bar-time"></span>
+    </div>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="footer">
+      <div class="shortcut">
+        <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>J</kbd>
+        <span>Ativar</span>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>⇧</kbd><kbd>J</kbd>
+        <span>Encerrar</span>
+      </div>
+      <div class="footer-sep"></div>
+      <span class="footer-tip" id="hotkey-tip">🎤 Voz: diga "Jarvis"</span>
+    </footer>
+  </div>
+
+  <!-- ══ MODAL: FEEDBACK ══ -->
+  <div class="modal-overlay" id="feedback-overlay" role="dialog" aria-modal="true" aria-labelledby="fb-title">
+    <div class="modal" id="feedback-modal" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="fb-title">📬 Mandar feedback</h3>
+        <button class="icon-btn" id="fb-close" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="form-hint" style="margin-bottom: 14px;">
+          O que tem pra melhorar? Bug que apareceu, feature que faltou, qualquer impressão. Vai direto pro desenvolvedor.
+        </p>
+        <div class="form-group">
+          <label class="form-label">Sua mensagem <span style="color:#ff6b6b">*</span></label>
+          <textarea class="form-input" id="fb-text" rows="6" placeholder="Ex: 'O modo Foco não fechou o Discord'  ou  'Adicionariam suporte a multi-monitor?'" style="resize: vertical; font-family: 'Outfit', sans-serif; line-height: 1.5;"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Seu nome (opcional)</label>
+          <input type="text" class="form-input" id="fb-name" placeholder="Ex: João — pra eu poder agradecer ou perguntar algo" maxlength="60" />
+        </div>
+        <div id="fb-disabled-warning" class="form-hint" style="display:none; color: #ff8888; padding: 10px; border: 1px solid rgba(255,79,79,0.3); border-radius: 8px; background: rgba(255,79,79,0.06);">
+          ⚠️ O canal de feedback não está configurado nesta build. Avise o desenvolvedor.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="fb-cancel" type="button">Cancelar</button>
+        <button class="btn-primary" id="fb-send" type="button">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+          Enviar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ONBOARDING WIZARD ══ Mostrado apenas na 1ª execução -->
+  <div class="onboarding-overlay" id="onboarding-overlay" role="dialog" aria-modal="true" aria-labelledby="ob-title">
+    <div class="onboarding-card">
+      <div class="onboarding-progress" id="ob-progress">
+        <span class="ob-dot active"></span><span class="ob-dot"></span><span class="ob-dot"></span><span class="ob-dot"></span>
+      </div>
+
+      <!-- Tela 1: boas-vindas -->
+      <div class="ob-screen active" data-screen="1">
+        <div class="ob-icon">⚡</div>
+        <h2 class="ob-title" id="ob-title">Bem-vindo ao JARVIS</h2>
+        <p class="ob-subtitle">Seu orquestrador de workstation pessoal.</p>
+        <p class="ob-text">Com um comando, ele monta seu ambiente de trabalho — abre seus apps, posiciona janelas, toca música, fecha distrações. Vamos te mostrar em 30 segundos.</p>
+        <div class="ob-features">
+          <div class="ob-feature"><span>🎤</span><span>Diga "hey jarvis"</span></div>
+          <div class="ob-feature"><span>⌨️</span><span>Atalhos de teclado</span></div>
+          <div class="ob-feature"><span>🖱️</span><span>Botão grande no painel</span></div>
+        </div>
+      </div>
+
+      <!-- Tela 2: voz IA (opcional) -->
+      <div class="ob-screen" data-screen="2">
+        <div class="ob-icon">🎙️</div>
+        <h2 class="ob-title">Falar com o JARVIS é opcional</h2>
+        <p class="ob-text">Pra você dizer "hey jarvis, abre o spotify" e ele entender, precisa de uma <b>API Key da Groq</b> — é grátis, leva 1 minuto.</p>
+        <p class="ob-text" style="color:var(--text-muted); font-size:11px;">Sem isso, hotkeys, painel e modos prontos funcionam normalmente.</p>
+        <div style="display:flex; gap:8px; flex-direction:column; margin-top:18px;">
+          <button class="btn-primary" id="ob-open-groq" type="button">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/></svg>
+            Abrir Groq Console (grátis)
+          </button>
+          <input type="password" class="form-input" id="ob-api-key" placeholder="Cole a key aqui (gsk_...) — ou pule" autocomplete="off" />
+        </div>
+      </div>
+
+      <!-- Tela 3: modos prontos -->
+      <div class="ob-screen" data-screen="3">
+        <div class="ob-icon">⚙️</div>
+        <h2 class="ob-title">Já preparei alguns modos pra você</h2>
+        <p class="ob-text">Detectei os apps na sua máquina e criei estes modos prontos. Você pode editar, duplicar ou apagar quando quiser.</p>
+        <div class="ob-modes-list" id="ob-modes-list">
+          <div class="actions-empty">Carregando...</div>
+        </div>
+      </div>
+
+      <!-- Tela 4: como ativar -->
+      <div class="ob-screen" data-screen="4">
+        <div class="ob-icon">🚀</div>
+        <h2 class="ob-title">Tudo pronto. Você pode ativar de 3 jeitos:</h2>
+        <div class="ob-shortcuts">
+          <div class="ob-shortcut">
+            <div class="ob-shortcut-icon">🎤</div>
+            <div>
+              <div class="ob-shortcut-title">Voz</div>
+              <div class="ob-shortcut-desc">Diga <b>"hey jarvis"</b> e fale o comando</div>
+            </div>
+          </div>
+          <div class="ob-shortcut">
+            <div class="ob-shortcut-icon">⌨️</div>
+            <div>
+              <div class="ob-shortcut-title">Atalho de teclado</div>
+              <div class="ob-shortcut-desc"><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd> ativa o modo padrão</div>
+            </div>
+          </div>
+          <div class="ob-shortcut">
+            <div class="ob-shortcut-icon">🖱️</div>
+            <div>
+              <div class="ob-shortcut-title">Painel</div>
+              <div class="ob-shortcut-desc">Esse aqui — clica <b>ATIVAR</b> ou em qualquer modo</div>
+            </div>
+          </div>
+        </div>
+        <p class="ob-text" style="margin-top:18px; color:var(--text-muted); font-size:11px;">
+          O JARVIS continua rodando na bandeja do Windows. Fechar esta janela só esconde — pra encerrar de verdade, clique em "Sair" na bandeja.
+        </p>
+      </div>
+
+      <div class="ob-footer">
+        <button class="btn-ghost" id="ob-skip" type="button">Pular tudo</button>
+        <span style="flex:1"></span>
+        <button class="btn-ghost" id="ob-back" type="button" style="display:none">Voltar</button>
+        <button class="btn-primary" id="ob-next" type="button">Próximo →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL: MODE EDITOR ══ -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Editar Modo</h3>
+        <button class="icon-btn" id="modal-close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="edit-mode-id" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome do Modo</label>
+            <input type="text" class="form-input" id="edit-mode-name" placeholder="Ex: Modo Trabalho" />
+          </div>
+          <div class="form-group" style="max-width:80px">
+            <label class="form-label">Ícone</label>
+            <input type="text" class="form-input" id="edit-mode-icon" placeholder="💼" maxlength="4" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Descrição (opcional)</label>
+          <input type="text" class="form-input" id="edit-mode-description" placeholder="Abre apps para trabalhar..." />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Horário automático (opcional)</label>
+          <input type="text" class="form-input" id="edit-mode-schedule" placeholder="Ex: 09:00  ou  mon-fri 09:00  ou  weekend 11:00" autocomplete="off" />
+          <p class="form-hint">Formato: <code>HH:MM</code> diário, ou <code>dias HH:MM</code>. Dias: mon-fri, weekdays, weekend, sat,sun, etc. Múltiplos: separe com <code>;</code> (ex: <code>mon-fri 09:00; mon-fri 18:00</code>). Vazio = sem agendamento.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Atalho global (opcional)</label>
+          <div class="hotkey-recorder">
+            <div class="hotkey-display" id="edit-mode-hotkey-display">Sem atalho</div>
+            <button type="button" class="btn-ghost hotkey-btn" id="btn-record-hotkey">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"/></svg>
+              Definir
+            </button>
+            <button type="button" class="btn-ghost hotkey-btn hotkey-btn-clear" id="btn-clear-hotkey" title="Limpar atalho">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/></svg>
+            </button>
+          </div>
+          <input type="hidden" id="edit-mode-hotkey" />
+          <p class="form-hint">Clique em "Definir" e pressione a combinação de teclas (ex: Ctrl+Alt+1). Para deixar sem atalho, clique no X.</p>
+        </div>
+
+        <!-- Actions List -->
+        <div class="actions-section">
+          <div class="actions-header">
+            <span class="form-label">Ações</span>
+            <button class="btn-ghost" id="btn-add-action">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+              Adicionar Ação
+            </button>
+          </div>
+          <div id="actions-list" class="actions-list">
+            <div class="actions-empty">Nenhuma ação. Clique em "Adicionar Ação" para começar.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-ghost" id="btn-cancel-mode">Cancelar</button>
+        <button class="btn-primary" id="btn-save-mode">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293z"/></svg>
+          Salvar Modo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

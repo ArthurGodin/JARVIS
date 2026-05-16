@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Cache transiente do PyWebView (gerado a cada boot pelo cache-bust)
+jarvis/web/_index.cache.html
+
+# Audio temp gerado pelo TTS (legado, hoje SAPI não escreve mais)
+jarvis_speech.mp3
+
+# Plugin de exemplo desabilitado vem versionado, mas .py ativos não
+plugins/*.py
+!plugins/exemplo.py.disabled
+
+# Sistemas de IDE
+.vscode/
+.idea/
+
+# Sistema operacional
+Thumbs.db
+desktop.ini
